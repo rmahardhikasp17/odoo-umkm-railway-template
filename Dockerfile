@@ -1,8 +1,12 @@
-# Gunakan Odoo 18 image resmi
+# Gunakan image resmi Odoo 18
 FROM odoo:18.0
 
-# Copy file konfigurasi ke dalam container (jika ada)
-COPY ./odoo.conf /etc/odoo/odoo.conf
+# Expose port Odoo
+EXPOSE 8069
 
-# Set entrypoint Odoo dengan file konfigurasi custom
-CMD ["odoo", "-c", "/etc/odoo/odoo.conf"]
+# Jalankan Odoo pakai env variable untuk koneksi database
+CMD ["odoo", 
+     "--db_host=${PGHOST}", 
+     "--db_port=${PGPORT}", 
+     "--db_user=${PGUSER}", 
+     "--db_password=${PGPASSWORD}"]
